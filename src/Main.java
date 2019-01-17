@@ -8,7 +8,6 @@ public class Main {
       System.out.println("Level: "+game.getLevel());
       game.init();
       game.moveToNextLevel();
-      game.increaseObstacale();
     }
 /*    game.movePirates();
 

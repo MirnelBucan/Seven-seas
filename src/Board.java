@@ -1,6 +1,7 @@
 public class Board {
   static final int EMPTY = 0;
   static final int ISLAND = 1;
+  static final int WRECK = 2;
   static final int SHIP = 3;
   static final int PIRATES = 4;
   static final int PORTAL = 5;
@@ -31,7 +32,7 @@ public class Board {
   void setPirate(int row, int col) {
     this.board[row][col] = this.PIRATES;
   }
-
+  void setWreck(int row, int col) { this.board[row][col] = this.WRECK; }
   void setIsland(int row, int col) {
     this.board[row][col] = this.ISLAND;
   }
