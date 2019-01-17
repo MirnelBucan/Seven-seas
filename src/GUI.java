@@ -40,13 +40,14 @@ public class GUI {
 
         if (v == game.board.SHIP) {
           c = Color.YELLOW;
-        } else if (v == Board.PIRATES) {
+        } else if (v == game.board.PORTAL) {
+          //TODO: FIX this
+          c = Color.RED;
+        } else if (v == game.board.PIRATES) {
           c = Color.BLACK;
         } else if (v == game.board.ISLAND) {
           c = Color.GRAY;
-        } else if (v == Board.PORTAL) {
-          c = Color.RED;
-        } else {
+        }  else {
           c = Color.BLUE;
         }
 
@@ -54,7 +55,7 @@ public class GUI {
         jp.add(jb[i][j]);
       }
     }
-
+    jf.
     jf.add(jp);
     jf.setResizable(false);
     jf.setVisible(true);
@@ -63,43 +64,39 @@ public class GUI {
       @Override
       public void keyPressed(KeyEvent e) {
         // TODO Auto-generated method stub
-        if (e.getKeyCode() == 49 || e.getKeyCode() == 97) {
+        if (e.getKeyCode() == 49 || e.getKeyCode() == 97 || e.getKeyCode() == 89) {
           game.ship.changeDirection(game.ship.LEFT_DOWN);
           System.out.println("IDEMO GORE-LIJEVO");
         }
 
-        if (e.getKeyCode() == 55 || e.getKeyCode() == 103) {
+        if (e.getKeyCode() == 55 || e.getKeyCode() == 103 || e.getKeyCode() ==81) {
           game.ship.changeDirection(game.ship.LEFT_UP);
           System.out.println("IDEMO GORE-LIJEVO");
         }
 
-        if (e.getKeyCode() == 56 || e.getKeyCode() == 104) {
+        if (e.getKeyCode() == 56 || e.getKeyCode() == 104 || e.getKeyCode() == 87) {
           game.ship.changeDirection(game.ship.UP);
           System.out.println("IDEMO GORE");
         }
-        if (e.getKeyCode() == 57 || e.getKeyCode() == 105) {
+        if (e.getKeyCode() == 57 || e.getKeyCode() == 105 || e.getKeyCode() == 69) {
           game.ship.changeDirection(game.ship.RIGHT_UP);
           System.out.println("IDEMO GORE-DESNO");
         }
 
-        if (e.getKeyCode() == 54 || e.getKeyCode() == 102) {
+        if (e.getKeyCode() == 54 || e.getKeyCode() == 102 || e.getKeyCode() == 68) {
           game.ship.changeDirection(game.ship.RIGHT);
           System.out.println("IDEMO DESNO");
         }
-        if (e.getKeyCode() == 51 || e.getKeyCode() == 99) {
+        if (e.getKeyCode() == 51 || e.getKeyCode() == 99 || e.getKeyCode() == 67) {
           game.ship.changeDirection(game.ship.RIGHT_DOWN );
           System.out.println("IDEMO DOLJE- DESNO");
         }
 
-        if (e.getKeyCode() == 50 || e.getKeyCode() == 98) {
+        if (e.getKeyCode() == 50 || e.getKeyCode() == 98 || e.getKeyCode() == 83) {
           game.ship.changeDirection(game.ship.DOWN);
           System.out.println("IDEMO DOLJE");
         }
-        if (e.getKeyCode() == 49 || e.getKeyCode() == 157) {
-          game.ship.changeDirection(game.ship.LEFT_DOWN);
-          System.out.println("IDEMO DOLJE-LIJEVO");
-        }
-        if (e.getKeyCode() == 52 || e.getKeyCode() == 100) {
+        if (e.getKeyCode() == 52 || e.getKeyCode() == 100 || e.getKeyCode() == 65) {
           game.ship.changeDirection(game.ship.LEFT);
           System.out.println("IDEMO LIJEVO");
         }
@@ -127,6 +124,11 @@ public class GUI {
     jf.addKeyListener(kl);
 
     while (true) {
+      if (game.end()) break;
+      if(game.nextLevel()){
+        game.moveToNextLevel();
+        game.init();
+      }
       for (int i=0; i<rowNum; i++) {
         for (int j=0; j<colNum; j++) {
           int v = game.board.board[i][j];
@@ -145,7 +147,7 @@ public class GUI {
           jb[i][j].setBackground(c);
         }
       }
-      if (game.end()) break;
+
       try {
         Thread.sleep(500);
       } catch (InterruptedException e) {

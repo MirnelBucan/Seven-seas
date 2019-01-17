@@ -12,6 +12,12 @@ public class Ship {
   static final int UP = 8;
   static final int RIGHT_DOWN = 3;
 
+  Ship(int row, int col) {
+    this.row = row;
+    this.col = col;
+    this.direction = 0; // TODO random generisati pravac
+  }
+
   public int getRow() {
     return row;
   }
@@ -34,12 +40,6 @@ public class Ship {
 
   public void setDirection(int direction) {
     this.direction = direction;
-  }
-
-  Ship(int row, int col) {
-    this.row = row;
-    this.col = col;
-    this.direction = 0; // TODO random generisati pravac
   }
 
   void move() {

@@ -1,8 +1,9 @@
 import java.util.Random;
 public class Game {
-  private int numOfPirates = 1;
-  private int numOfIslands = 1;
+  private int numOfPirates = 0;
+  private int numOfIslands = 5;
   private int level = 1;
+  private boolean gameOver = false;
   Ship ship;
   Board board;
   Pirate[] pirates;
@@ -10,11 +11,17 @@ public class Game {
   //getters & setters
   int getLevel(){ return this.level; }
   void setLevel(int lvl){ this.level = lvl; }
-  void increaseObstacale(){
+  void restart(){
+    this.level = 1;
+    this.numOfIslands = 1;
+    this.numOfPirates = 1;
+
+  }
+  void moveToNextLevel(){
+    this.level++;
     this.numOfIslands++;
     this.numOfPirates = this.numOfIslands+1;
   }
-  void moveToNextLevel(){ this.level++; }
 
   public void init() {
     board = new Board();
@@ -65,35 +72,38 @@ public class Game {
   }
 
   public void moveShip() {
-    int pacRow = ship.getRow();
-    int pacCol = ship.getCol();
     int direction = ship.getDirection();
 
-    if (checkMove(pacRow, pacCol, direction)) {
+    if (checkMove(ship.getRow(), ship.getCol(), direction)) {
       board.removeShip(ship.getRow(), ship.getCol());
       ship.move();
-      board.setShip(ship.getRow(), ship.getCol());
+      if (board.setShip(ship.getRow(), ship.getCol()) == true) {
+        this.gameOver = true;
+      }
+      System.out.println("Game over: "+this.gameOver);
     }
   }
 
-
   public void movePirates() {
+
     AI();
     for (int i = 0; i < this.numOfPirates; i++) {
       board.removePirate(pirates[i].getRow(), pirates[i].getCol());
-      pirates[i].move();
-      board.setPirate(pirates[i].getRow(), pirates[i].getCol());
+      if(pirates[i].getDestroyed() == false){
+        pirates[i].move();
+        if( board.setPirate(pirates[i].getRow(), pirates[i].getCol()) ){
+          pirates[i].setDestroyed(true);
+          if(board.board[this.ship.getRow()][this.ship.getCol()] != this.board.SHIP)
+            this.gameOver = true;
+        }
+      }
     }
   }
   private void AI() {
     for (int i = 0; i < this.numOfPirates; i++) {
-        int eRow = pirates[i].getRow();
-        int eCol = pirates[i].getCol();
         pirates[i].newPosition(this.ship.getCol(), this.ship.getRow());
     }
   }
-
-
 
   boolean checkMove(int row, int col, int dir) {
     int dimRow = board.getDimRow();
@@ -139,11 +149,8 @@ public class Game {
   }
 
   boolean end() {
-    for (int i = 0; i < this.numOfPirates; i++) {
-      if (this.ship.getRow() == this.pirates[i].getRow() && this.ship.getCol() == this.pirates[i].getCol()) {
+      if (this.gameOver == true)
         return true;
-      }
-    }
     return false;
   }
   boolean nextLevel() {

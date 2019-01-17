@@ -25,12 +25,31 @@ public class Board {
     return dimCol;
   }
 
-  void setShip(int row, int col) {
+  boolean setShip(int row, int col) {
+    if(this.board[row][col] == this.WRECK ||
+      this.board[row][col] == this.ISLAND ||
+      this.board[row][col] == this.PIRATES){
+      this.board[row][col] = this.EMPTY;
+      return true;
+    }
     this.board[row][col] = this.SHIP;
+    return false;
   }
 
-  void setPirate(int row, int col) {
+  boolean setPirate(int row, int col) {
+    if(this.board[row][col] == this.ISLAND){
+      this.board[row][col] = this.EMPTY;
+      return true;
+    } else if (this.board[row][col] == this.PIRATES ||
+            this.board[row][col] == this.WRECK){
+      this.board[row][col] = this.WRECK;
+      return true;
+    } else if (this.board[row][col] == this.SHIP){
+      this.board[row][col] = this.WRECK;
+      return true;
+    }
     this.board[row][col] = this.PIRATES;
+    return false;
   }
   void setWreck(int row, int col) { this.board[row][col] = this.WRECK; }
   void setIsland(int row, int col) {

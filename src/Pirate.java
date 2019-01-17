@@ -4,6 +4,14 @@ public class Pirate {
 	private int col;
 	private int direction;
   private boolean wreck;
+  private boolean destroyed;
+
+  Pirate(int row, int col, int dir) {
+    this.row = row;
+    this.col = col;
+    this.direction = dir; // TODO random generisati pravac
+    this.destroyed = false;
+  }
 	public int getRow() {
 		return row;
 	}
@@ -23,9 +31,16 @@ public class Pirate {
 	public int getDirection() {
 		return direction;
 	}
+
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
+
+
+  public void setDestroyed(boolean destroyed) {
+    this.destroyed = destroyed;
+  }
+  public boolean getDestroyed() { return this.destroyed; }
 
 	static final int UP = 8;
 	static final int RIGHT_UP = 9;
@@ -35,15 +50,6 @@ public class Pirate {
 	static final int LEFT_DOWN = 1;
 	static final int LEFT = 4;
 	static final int LEFT_UP = 7;
-
-
-
-	Pirate(int row, int col, int dir) {
-		this.row = row;
-		this.col = col;
-		this.direction = dir; // TODO random generisati pravac
-    this.wreck = false;
-	}
 
 	void move() {
 		if(this.direction == this.LEFT_UP) {
@@ -104,12 +110,10 @@ public class Pirate {
 		int min = niz[0];
 
 		for (int i = 0; i < 8; i++) {
-      System.out.println("Distanca je: "+niz[i]+ "index je: "+i);
 			if (niz[i] < min) {
 				min = niz[i];
 			}
 		}
-    System.out.println("Min: "+min);
     int random = randomIndex(niz, min);
 		if (random == 0) {
 			this.direction = this.UP;
