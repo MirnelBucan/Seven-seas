@@ -55,7 +55,6 @@ public class GUI {
         jp.add(jb[i][j]);
       }
     }
-    jf.
     jf.add(jp);
     jf.setResizable(false);
     jf.setVisible(true);
@@ -124,7 +123,9 @@ public class GUI {
     jf.addKeyListener(kl);
 
     while (true) {
-      if (game.end()) break;
+      if (game.end()) {
+        game.restart();
+      };
       if(game.nextLevel()){
         game.moveToNextLevel();
         game.init();
@@ -155,7 +156,6 @@ public class GUI {
         e.printStackTrace();
       }
     }
-    System.out.println("Game ended");
   }
 
 }
