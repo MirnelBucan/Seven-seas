@@ -28,7 +28,7 @@ public class GUI {
     int rowNum = game.board.getDimRow();
     int colNum = game.board.getDimCol();
 
-    jf = new JFrame("SEVEN SEAS");
+    jf = new JFrame("Pirate hunt");
     jf.setSize(500, 500);
     jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
