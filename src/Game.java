@@ -1,7 +1,7 @@
 import java.util.Random;
 public class Game {
-  private int numOfPirates = 0;
-  private int numOfIslands = 5;
+  private int numOfPirates = 1;
+  private int numOfIslands = 2;
   private int level = 1;
   private boolean gameOver = false;
   Ship ship;
@@ -10,7 +10,6 @@ public class Game {
 
   //getters & setters
   int getLevel(){ return this.level; }
-  void setLevel(int lvl){ this.level = lvl; }
   void setGameOver(boolean gameOver) { this.gameOver = gameOver; }
 
 

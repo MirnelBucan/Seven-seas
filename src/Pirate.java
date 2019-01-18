@@ -14,27 +14,9 @@ public class Pirate {
 	public int getRow() {
 		return row;
 	}
-
-	public void setRow(int row) {
-		this.row = row;
-	}
-
 	public int getCol() {
 		return col;
 	}
-
-	public void setCol(int col) {
-		this.col = col;
-	}
-
-	public int getDirection() {
-		return direction;
-	}
-
-	public void setDirection(int direction) {
-		this.direction = direction;
-	}
-
 
   public void setDestroyed(boolean destroyed) {
     this.destroyed = destroyed;

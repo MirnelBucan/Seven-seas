@@ -128,8 +128,8 @@ public class GUI {
           game.restart();
           game.setGameOver(false);
           game.init();
-        JOptionPane.showMessageDialog(null, "Game over...");
-        jf.dispatchEvent(new WindowEvent(jf, WindowEvent.WINDOW_CLOSING));
+        JOptionPane.showMessageDialog(jf, "Play again?");
+
 
       }
       if(game.nextLevel()){
