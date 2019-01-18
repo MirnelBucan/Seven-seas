@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,7 +32,7 @@ public class GUI {
     JButton[][] jb = new JButton[rowNum][colNum];
     for (int i=0; i<rowNum; i++) {
       for (int j=0; j<colNum; j++) {
-        jb[i][j] = new JButton(i + " " + j);
+        jb[i][j] = new JButton();
         jb[i][j].setSize(30, 30);
         jb[i][j].setEnabled(false);
 
@@ -46,7 +47,7 @@ public class GUI {
         } else if (v == game.board.PIRATES) {
           c = Color.BLACK;
         } else if (v == game.board.ISLAND) {
-          c = Color.GRAY;
+          c = Color.GREEN;
         }  else {
           c = Color.BLUE;
         }
@@ -122,11 +123,17 @@ public class GUI {
 
     jf.addKeyListener(kl);
 
-    while (true) {
+    while (game.getLevel() < 10) {
       if (game.end()) {
-        game.restart();
-      };
+          game.restart();
+          game.setGameOver(false);
+          game.init();
+        JOptionPane.showMessageDialog(null, "Game over...");
+        jf.dispatchEvent(new WindowEvent(jf, WindowEvent.WINDOW_CLOSING));
+
+      }
       if(game.nextLevel()){
+        System.out.println("Newwww one");
         game.moveToNextLevel();
         game.init();
       }
@@ -139,18 +146,20 @@ public class GUI {
             c = Color.YELLOW;
           } else if (v == game.board.PIRATES) {
             c = Color.BLACK;
-          } else if (v == game.board.ISLAND) {
-            c = Color.GRAY;
+          } else if (v == game.board.PORTAL) {
+            c = Color.RED;
+          }
+          else if (v == game.board.ISLAND) {
+            c = Color.GREEN;
           } else {
-            c = Color.BLUE;
+            c = Color.getColor(null, new Color(1,149, 203));
           }
 
           jb[i][j].setBackground(c);
         }
       }
-
       try {
-        Thread.sleep(500);
+        Thread.sleep(200);
       } catch (InterruptedException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();

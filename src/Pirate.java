@@ -3,7 +3,6 @@ public class Pirate {
 	private int row;
 	private int col;
 	private int direction;
-  private boolean wreck;
   private boolean destroyed;
 
   Pirate(int row, int col, int dir) {

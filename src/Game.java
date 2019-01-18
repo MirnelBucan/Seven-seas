@@ -11,17 +11,8 @@ public class Game {
   //getters & setters
   int getLevel(){ return this.level; }
   void setLevel(int lvl){ this.level = lvl; }
-  void restart(){
-    this.level = 1;
-    this.numOfIslands = 1;
-    this.numOfPirates = 1;
+  void setGameOver(boolean gameOver) { this.gameOver = gameOver; }
 
-  }
-  void moveToNextLevel(){
-    this.level++;
-    this.numOfIslands++;
-    this.numOfPirates = this.numOfIslands+1;
-  }
 
   public void init() {
     board = new Board();
@@ -88,8 +79,8 @@ public class Game {
 
     AI();
     for (int i = 0; i < this.numOfPirates; i++) {
-      board.removePirate(pirates[i].getRow(), pirates[i].getCol());
       if(pirates[i].getDestroyed() == false){
+        board.removePirate(pirates[i].getRow(), pirates[i].getCol());
         pirates[i].move();
         if( board.setPirate(pirates[i].getRow(), pirates[i].getCol()) ){
           pirates[i].setDestroyed(true);
@@ -156,5 +147,16 @@ public class Game {
   boolean nextLevel() {
     //if player manages to get to portal, put him on next level
     return this.ship.getRow() == 0 && this.ship.getCol() == this.board.getDimCol() - 1;
+  }
+  void restart(){
+    this.level = 1;
+    this.numOfIslands = 1;
+    this.numOfPirates = 1;
+
+  }
+  void moveToNextLevel(){
+    this.level++;
+    this.numOfIslands++;
+    this.numOfPirates = this.numOfIslands+1;
   }
 }
