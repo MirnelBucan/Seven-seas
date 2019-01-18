@@ -1,4 +1,11 @@
-
+/**
+ * Public class Ship represents player in the game.
+ * It stores information of position of player on board,
+ * direction in which to move.
+ * @author Mirnel Bucan
+ * @version 1.0.0 (alfa)
+ * @since 18/1/2019
+ */
 public class Ship {
   private int row;
   private int col;

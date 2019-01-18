@@ -1,37 +1,66 @@
-
+/**
+ * Public class Pirate represents enemies in the game.
+ * It stores information of position of enemy on board,
+ * direction in which to move and if enemy has bin destroyed.
+ * @author Mirnel Bucan
+ * @version 1.0.0 (alfa)
+ * @since 18/1/2019
+ */
 public class Pirate {
 	private int row;
 	private int col;
 	private int direction;
   private boolean destroyed;
 
+  static final int UP = 8;
+  static final int RIGHT_UP = 9;
+  static final int RIGHT = 6;
+  static final int RIGHT_DOWN = 3;
+  static final int DOWN = 2;
+  static final int LEFT_DOWN = 1;
+  static final int LEFT = 4;
+  static final int LEFT_UP = 7;
+
   Pirate(int row, int col, int dir) {
     this.row = row;
     this.col = col;
-    this.direction = dir; // TODO random generisati pravac
+    this.direction = dir;
     this.destroyed = false;
   }
+
+  /**
+   * Getter for row
+   * @return int Returns current row in which pirate is.
+   */
 	public int getRow() {
 		return row;
 	}
+
+  /**
+   * Getter for column
+   * @return int Returns current column in which pirate is.
+   */
 	public int getCol() {
 		return col;
 	}
 
+  /**
+   * Setter for destroyed
+   * @param destroyed Represent if pirate has been destroyed during the move it made.
+   */
   public void setDestroyed(boolean destroyed) {
     this.destroyed = destroyed;
   }
+
+  /**
+   * Getter for destroyed
+   * @return boolean Returns in which state is pirate (destroyed or not)
+   */
   public boolean getDestroyed() { return this.destroyed; }
 
-	static final int UP = 8;
-	static final int RIGHT_UP = 9;
-	static final int RIGHT = 6;
-	static final int RIGHT_DOWN = 3;
-	static final int DOWN = 2;
-	static final int LEFT_DOWN = 1;
-	static final int LEFT = 4;
-	static final int LEFT_UP = 7;
-
+  /**
+   * This function is used to change state of pirates position.
+   */
 	void move() {
 		if(this.direction == this.LEFT_UP) {
 			this.row--;
@@ -63,21 +92,25 @@ public class Pirate {
 		}
 	}
 
-	void changeDirection(int dir) {
-		this.direction = dir;
-	}
-	/*
-	 * Manhattan distance between two points across two-dimensional grid is just
-	 * sum of theirs horizontal and vertical difference.
-	 */
+  /**
+   * Manhattan distance between two points across two-dimensional grid is just
+   * sum of theirs horizontal and vertical difference.
+   * @param xP Current player column position (or looked in 2D coordinated system , x coordinate)
+   * @param yP Current player row position (or looked in 2D coordinated system , y coordinate)
+   * @param yD Current pirate row position (or looked in 2D coordinated system , y coordinate)
+   * @param xD Current pirate column position (or looked in 2D coordinated system , x coordinate)
+   * @return int Manhattan distance of player and pirate
+   */
 	private int returnDistance(int xP, int yP, int yD, int xD) {
 		return Math.abs(xP - xD) + Math.abs(yP - yD);
 	}
 
-	/*
-	 * New position of ghost is minimum one amongst four possible steps. If
-	 * there is more than one minimum, then we randomly pick one of them.
-	 */
+  /**
+   * New position of pirate is minimum one amongst 8 possible steps. If
+   * there is more than one minimum, then we randomly pick one of them.
+   * @param x1 Represents current row of player on board.
+   * @param y1 Represents current column of player on board.
+   */
 	void newPosition(int x1, int y1) {
 		int[] niz = new int[8]; // up, right, down, left
 		niz[0] = returnDistance(x1, y1, this.row - 1, this.col);
@@ -114,18 +147,14 @@ public class Pirate {
 			this.direction = this.LEFT_UP;
 		}
 	}
-  /*
-   * We iterate over array of steps, until we find one that is at the same
-   * time also one or only minimum distance towards the desirable point.
-   *
-   * The idea behind return statement is that we almost always want to move in
-   * the direction where the point lies. That is done by "ran" part. In order
-   * to simulate some "AI", we should enable some kind of mistake, because we
-   * can't always have the right answer. (in this example, the mistake is just
-   * true(1)/false(0)) But we need to protect ourselves, because that new
-   * value could go right out of the bounds, so we can take the remaining of
-   * that number divided by 4 (since we have just 4 possible steps, so that
-   * new values always lies between 0-3).
+
+  /**
+   * This function is used to simulate possibility of AI mistake.
+   * Since it would be almost impossible to win game if computer is constantly
+   * anticipating players every move without mistake.
+   * @param niz Is array possible moves to chose from
+   * @param min Is minimal distance between player and pirate
+   * @return int Returns "choice" made randomly to move
    */
   private int randomIndex(int[] niz, int min) {
     int ran = (int) (Math.random() * 8);
@@ -135,12 +164,9 @@ public class Pirate {
     return (Math.abs(ran - getRandom01())) % 8;
   }
 
-  /*
-   * "Some kind of mistake" that we already talked about, completely depends
-   * on the value 0.75, since from that depends will there be a mistake or
-   * not. Further more that value approaches 1, game will be harder, because
-   * there will be less mistakes. In practical experiments, 0.75 proved to be
-   * solid measure.
+  /**
+   * This function is used to simulate that mistake, 25% chance to make wrong move.
+   * @return int Returns 0 if there is no mistake, 1 if mistake occurs .
    */
   int getRandom01() {
     if (Math.random() < 0.75) {

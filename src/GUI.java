@@ -8,7 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+/**
+ * Public class GUI ( Graphical User Interface ) is used to generate interface for players to use.
+ * Interface is generated in windowed mode, simple panel and array of buttons with listener attached to them.
+ * Uses multiple keys for movement, including numpad keys and qwerty keys.
+ * @author Mirnel Bucan
+ * @version 1.0.0 (alfa)
+ * @since 18/1/2019
+ */
 public class GUI {
   static JFrame jf;
   static JPanel jp;

@@ -1,18 +1,45 @@
+
 import java.util.Random;
+/**
+ * Public class Game represents everything that this game should have,
+ * including board (on which we move our pieces ), multiple pirates ( represent environment to play against) and player.
+ * @author Mirnel Bucan
+ * @version 1.0.0 (alfa)
+ * @since 18/1/2019
+ */
 public class Game {
+  /** Number of pirates on each level*/
   private int numOfPirates = 1;
+  /** Number of islands on each level*/
   private int numOfIslands = 2;
+  /** Current level of game*/
   private int level = 1;
+  /** Represents state of game if it ended (player lost) or not */
   private boolean gameOver = false;
+  /** Represents player */
   Ship ship;
+  /** Represents a board on which we play */
   Board board;
+  /** Represents multiple enemies on board */
   Pirate[] pirates;
 
-  //getters & setters
+  /**
+   * Getter for level
+   * @return int Current level of the game
+   */
   int getLevel(){ return this.level; }
+
+  /**
+   * Setter for gameOver
+   * @param gameOver Represents current state of game
+   */
   void setGameOver(boolean gameOver) { this.gameOver = gameOver; }
 
-
+  /**
+   * Function init() is used to initialize board and pieces on it.
+   * It randomly puts pirates and islands , while player is fixed with his starting position
+   * pirates and islands must be atleast 5 places away from player.
+   */
   public void init() {
     board = new Board();
     //player on fixed position bottom left corner
@@ -20,8 +47,6 @@ public class Game {
     int randomRow;
     int randomCol;
     Random randomPiratePosition = new Random();
-    System.out.println("Num of pirates: "+this.numOfPirates);
-    System.out.println("Num of islands: "+this.numOfIslands);
     board.setShip(ship.getRow(), ship.getCol());
     int i = 0;
     pirates = new Pirate[this.numOfPirates];
@@ -31,9 +56,7 @@ public class Game {
       //Random pirate position col and to be atleast 5 places away from player
       randomCol = randomPiratePosition.nextInt(15)+5;
       if(board.checkInitPirates(randomRow, randomCol)) {
-        //TODO: remove this "console.log"
-        System.out.println("ROw: "+ randomRow +" Col: "+ randomCol);
-        pirates[i] = new Pirate(randomRow, randomCol, Pirate.UP);    // TODO Postavi duhove na OK pozicije
+        pirates[i] = new Pirate(randomRow, randomCol, Pirate.UP);
         board.setPirate(randomRow, randomCol);
         i++;
       }
@@ -45,8 +68,6 @@ public class Game {
       //Random island position col and to be atleast 5 places away from player
       randomCol = randomPiratePosition.nextInt(15)+5;
       if(board.checkInitPirates(randomRow, randomCol)) {
-        //TODO: remove this "console.log"
-        System.out.println("ROw: "+ randomRow +" Col: "+ randomCol);
         board.setIsland(randomRow, randomCol);
         i++;
       }
@@ -55,12 +76,12 @@ public class Game {
     board.toConsole();
 
   }
-  public void moveShipMRandom() {
-    int dir = (int) (Math.random() * 4 + 1);
-    this.ship.setDirection(dir);
-    moveShip();
-  }
 
+  /**
+   * This function is used to move player on the board.
+   * It prevents player from moving out of array bounds.
+   * it also checks for player collision with env.
+   */
   public void moveShip() {
     int direction = ship.getDirection();
 
@@ -74,6 +95,12 @@ public class Game {
     }
   }
 
+  /**
+   * This function is used to move pirate on board.
+   * It also detects collision with env, and separates collision with player
+   * and other obstacles to be able to detects end of game if pirate manages to
+   * destroys player.
+   */
   public void movePirates() {
 
     AI();
@@ -89,12 +116,25 @@ public class Game {
       }
     }
   }
+
+  /**
+   * This function is used for making pirates movements.
+   * Represents basic AI, works on distance between player and pirate,
+   * than decides which direction to move.
+   */
   private void AI() {
     for (int i = 0; i < this.numOfPirates; i++) {
         pirates[i].newPosition(this.ship.getCol(), this.ship.getRow());
     }
   }
 
+  /**
+   * This function is used to prevent player from moving out of bounds of map
+   * @param row Represents in which row player is currently on
+   * @param col Represents in which column player is currently on
+   * @param dir Represents in which direction player is attempting to move
+   * @return True if players move is allowed, false if not.
+   */
   boolean checkMove(int row, int col, int dir) {
     int dimRow = board.getDimRow();
     int dimCol = board.getDimCol();
@@ -143,16 +183,30 @@ public class Game {
         return true;
     return false;
   }
+
+  /**
+   * This function determines if player managed to get to portal
+   * @return Returns true if player gets to portal, false otherwise.
+   */
   boolean nextLevel() {
     //if player manages to get to portal, put him on next level
     return this.ship.getRow() == 0 && this.ship.getCol() == this.board.getDimCol() - 1;
   }
+
+  /**
+   * This function is used to return initial game state.
+   */
   void restart(){
     this.level = 1;
     this.numOfIslands = 1;
     this.numOfPirates = 1;
 
   }
+
+  /**
+   * This function is used to simulate next level of difficulty by
+   * increasing number of obstacles
+   */
   void moveToNextLevel(){
     this.level++;
     this.numOfIslands++;

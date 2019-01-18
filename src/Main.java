@@ -1,4 +1,11 @@
 import java.util.Scanner;
+/**
+ * Public class Main is used to play this game in console.
+ * In which every turn player enters his preferred direction to move.
+ * @author Mirnel Bucan
+ * @version 1.0.0 (alfa)
+ * @since 18/1/2019
+ */
 public class Main {
 
   public static void main(String[] args) {
@@ -27,6 +34,14 @@ public class Main {
         game.moveToNextLevel();
         game.init();
       }
+      System.out.println("Allowed moves (W - UP) ");
+      System.out.println("Allowed moves (E - UP and RIGHT) ");
+      System.out.println("Allowed moves (D - RIGHT) ");
+      System.out.println("Allowed moves (C - DOWN and RIGHT) ");
+      System.out.println("Allowed moves (S - DOWN) ");
+      System.out.println("Allowed moves (Y - DOWN and LEFT) ");
+      System.out.println("Allowed moves (A - LEFT) ");
+      System.out.println("Allowed moves (Q - LEFT and UP) ");
       System.out.println("Enter your next move: ");
       in = input.nextLine();
       if(in.equals("W"))
